@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=<%= $display_name %>
+<% if $icon { %>Icon=<%= $icon %><% } %>
+<% if $comment { %>Comment=<%= $comment %><% } %>
+Categories=<%= join($categories, ';') %>;
+Exec=<%= $exec_path %>
+Terminal=<%= $terminal %>
+Type=Application

@@ -1,0 +1,19 @@
+user: 'barre'
+
+base::zsh::theme: 'jaischeema'
+base::zsh::plugins:
+    - 'git'
+
+apps::atom::version: '1.12.7'
+
+apps::java_version: '8'
+apps::dockercompose_version: '1.9.0'
+apps::scala_version: '2.11'
+apps::sbt_version: '0.13.13'
+apps::gradle_version: '2.14'
+apps::maven_version: '3.3.9'
+apps::intellij_version: '2016.3'
+
+apps::nodejs::version: '6.x'
+
+apps::docker::allow_user_access: true

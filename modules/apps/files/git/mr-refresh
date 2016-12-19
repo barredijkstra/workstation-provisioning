@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+CUR_DIR=$(pwd)
+if [ -f "~/.mrconfig" ]; then
+  echo "Backing up ~/.mrconfig as ~/.mrconfig.bak"
+  mv ~/.mrconfig ~/.mrconfig.bak
+fi
+
+echo "Updating myrepos registries..."
+
+for i in $(find ~/projects -name ".git"); do
+    cd "$i"
+    cd ..
+    mr register
+    cd $CUR_DIR
+done
+
+echo "Completed regeneration of ~/.mrconfig"
