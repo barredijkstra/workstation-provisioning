@@ -1,37 +1,33 @@
 class apps::sdkman {
+  require base
 
-  $sdkman_path = "${base::userhome}/.sdkman"
-
-  install::bash { 'https://get.sdkman.io':
-    is_url      => true,
-    run_as_root => false,
-    unless      => "test -d ${sdkman_path}",
-    creates     => "${sdkman_path}/bin/sdkman-init.sh",
-    env         => [ "SDKMAN_DIR=${sdkman_path}"],
-  }
-
-  file { "${base::userhome}/.zshrc":
-    ensure => present,
-    owner  => $base::user,
-  }
-  file_line { 'zshrc SDKMAN_DIR':
-    path => "${base::userhome}/.zshrc",
-    line => "export SDKMAN_DIR=\"${sdkman_path}\"",
-  }
-  file_line { 'zshrc sdkman-init.sh':
-    path => "${base::userhome}/.zshrc",
-    line => "[[ -s \"${sdkman_path}/bin/sdkman-init.sh\" ]] && source \"${sdkman_path}/bin/sdkman-init.sh\"",
+  class { '::sdkman' :
+    owner   => $base::user,
+    group   => $base::user,
+    homedir => $base::userhome,
   }
 
   define install(
-    $package,
-    $version = "",
+    String $package = $name,
+    String $version = '',
+    Boolean $default = true,
   ) {
-    exec { "sdk install ${package} ${version}":
-      command => "sdk install ${package} ${version}",
-      cwd     => $base::userhome,
-      user    => $base::user,
-      path    => $::path,
+    sdkman::package { "install ${package} ${version}":
+      package_name => $package,
+      version      => $version,
+      is_default   => $default,
+      ensure       => present,
+    }
+  }
+
+  define remove(
+    String $package,
+    String $version = '',
+  ) {
+    sdkman::package { "remove ${package} ${version}":
+      package_name => $package,
+      version      => $version,
+      ensure       => absent,
     }
   }
 }

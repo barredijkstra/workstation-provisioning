@@ -1,10 +1,12 @@
 define apps::maven (
-  $version = $name,
+  String  $version = $name,
+  Boolean $default = true,
 ) {
   require apps::sdkman
 
-  apps::sdkman::install { "maven_${version}":
+  apps::sdkman::install { "maven ${version}":
     package => 'maven',
     version => $version,
+    default => $default,
   }
 }

@@ -1,10 +1,12 @@
 define apps::gradle (
-  $version = $name,
+  String  $version = $name,
+  Boolean $default = true,
 ) {
   require apps::sdkman
 
-  apps::sdkman::install { "gradle_${version}":
+  apps::sdkman::install { "gradle ${version}":
     package => 'gradle',
     version => $version,
+    default => $default,
   }
 }

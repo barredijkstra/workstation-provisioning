@@ -40,6 +40,7 @@ class base {
     'nmap',
     'pwgen',
     'p7zip-full',
+    'unzip',
     'tmux',
     'urlview',
     'mono-dmcs',

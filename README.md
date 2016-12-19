@@ -31,10 +31,6 @@ Main components:
 ## Known issues
 
  - Adding apt-repos are not always triggering an apt-get update causing a failed install of a program. Running provision.sh a 2nd time should fix the failed installs.
- - sdkman provides `sdk` as a function (not executable), not allowing for easy installation of packages through sdkman
- - currently scala/maven/gradle/sbt installation fails due to sdkman problem.
- - zsh settings are only initialised on first login for a user (for example `~/.zshrc`), this makes adding certain configuration (e.g. sdkman parameters) tricky.
-
 
 ## Todo
 
@@ -46,4 +42,6 @@ Main components:
 - Add support for different desktops.
 - Add support for installing (3rd party) drivers and per node/facter-based selection.
 - Add install package for robomongo (https://robomongo.org/)
+- Add install package for soapui (don't ask...)
 - Add install package for yed GraphEditor (https://www.yworks.com/downloads#yEd)
+- Add install package for kubectl / minikube

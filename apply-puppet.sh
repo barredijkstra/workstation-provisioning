@@ -5,6 +5,7 @@ declare -A MODULES=(
     ['bashtoni-timezone']='latest'
     ['garethr-docker']='latest'
     ['maestrodev-wget']='latest'
+    ['paulosuzart-sdkman']='latest'
     ['puppet-archive']='latest'
     ['puppet-nodejs']='latest'
     ['puppetlabs-apt']='latest'
@@ -21,7 +22,7 @@ function load_modules_versions {
 }
 load_modules_versions
 
-echo "Ensuring installation of ${#MODULES[@]} forge based puppet modules for ${PUPPET_MODULE_ENV} in ${PUPPET_MODULE_PATH}"
+echo "Ensuring installation of ${#MODULES[@]} forge based puppet modules"
 for MODULE in ${!MODULES[@]}; do
     MOD_VERSION="${INSTALLED_MODULES[$MODULE]}"
     REQ_VERSION="${MODULES[$MODULE]}"
@@ -49,7 +50,7 @@ for MODULE in ${!MODULES[@]}; do
     MOD_VERSION="${INSTALLED_MODULES[$MODULE]}"
     REQ_VERSION="${MODULES[$MODULE]}"
     if [ "" == "$MOD_VERSION" ] || ( [ ! "latest" == "$REQ_VERSION" ] && [ ! "$MOD_VERSION" == "$REQ_VERSION" ] ); then
-        echo "Failed to install version ${REQ_VERSION} (installed version: ${MOD_VERSION}) of puppet module ${MODULE} for ${PUPPET_MODULE_ENV} in ${PUPPET_MODULE_PATH}, aborting..."
+        echo "Failed to install version ${REQ_VERSION} (installed version: ${MOD_VERSION}) of puppet module ${MODULE}, aborting..."
         exit -1
     fi
 done
