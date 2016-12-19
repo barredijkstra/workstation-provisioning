@@ -1,7 +1,7 @@
 define desktop::shortcut(
   String $user = $base::user,
   String $display_name,
-  String $comment,
+  String $comment = undef,
   String $exec_path,
   Array[String] $categories = ['Application'],
   Boolean $terminal = false,

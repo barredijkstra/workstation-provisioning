@@ -1,100 +1,49 @@
-Puppet-based workstation provisioning
-=====================================
+# Puppet-based workstation provisioning
 
-This project is based on my previous provisioner which used shell scripts.
-The big advantage in using Puppet is that it can now also be used to update machines.
+Puppet project for provisioning my personal workstations, allowing for updating of the machine through puppet.
 
-This is specifically meant to set up Ubuntu development workstations. It might be useful for other types of work, but your milage may vary.
+This project is written for the latest Ubuntu LTS (xenial). It might work on other distros/versions, but is currently untested.
 
-How I set up a new machine
---------------------------
+This project started as a fork of [github.com/nightwhistler] but ended up being a full rewrite (hence why the fork link was removed)
 
- 1. Pick a spiffy hostname (use pick_hostname.sh on another machine)
+## Details
 
- 2. Install the machine (basic Ubuntu install, next, next, finish)
+The provisioning is written for Ubuntu Xenial LTS and provides a Java/Scala development workstation running ubuntu-desktop (unity).
 
- 3. Download and unzip this project
+Main components:
+- Java development stack wit IntelliJ IDEA
+- Scala development stack
+- Docker stack (without kubernetes)
+- VirtualBox/ vagrant
+- Standard office/internet applications.
 
- 4. Run puppet.sh to install Puppet 4 on the machine
+## How to set up a new machine
 
- 5. Run provision.sh to actually install all the tools and packages I need.
-    This is a seperate step from 2, since this can also be run to update a machine.
-
- 6. Start the owncloud sync client to sync my dotFiles folder 
-
- 7. Symlink the dotFiles to the root of my user's home folder
-
+ 1. Pick a hostname.
+ 2. Install the machine (basic Ubuntu install; next, next, finish)
+ 3. Install git and checkout or download and unzip this project
+ 4. Update `hieradata/defaults.yaml` or create `hieradata/node/<machine-name>.yaml` to set the desired settings.
+ 4. Run `./provision.sh`; this will install puppet (`install-puppet-agent.sh`) and provision the machine (`apply-puppet.sh`).
+ 6. Start the installed owncloud sync client to sync the dotFiles folder 
+ 7. Symlink the dotFiles to the root of the user's home folder
  8. Profit :)
 
+## Known issues
 
-I am putting this on Github since there is nothing specific to me in this setup, though changes are you'd want to tweak it for your own use... 
-Vimperator and i3 are not everyone's cup of tea :)
+ - Adding apt-repos are not always triggering an apt-get update causing a failed install of a program. Running provision.sh a 2nd time should fix the failed installs.
+ - sdkman provides `sdk` as a function (not executable), not allowing for easy installation of packages through sdkman
+ - currently scala/maven/gradle/sbt installation fails due to sdkman problem.
+ - zsh settings are only initialised on first login for a user (for example `~/.zshrc`), this makes adding certain configuration (e.g. sdkman parameters) tricky.
 
 
-Known issues
-------------
+## Todo
 
-There seem to be some minor ordening problems in adding new apt repos, so often you'll need to run provision.sh twice to get the system fully set up. Slightly annoying but not a show-stopper.
-
-## TODO
-
-### General
-
- - Create install module with subclasses for different installation types
-   - default repo
-   - custom repo
-   - ppa repo
-   - deb repo
-   - plain download/install
-   - web/shell based installer
-   - firefox plugin
-   - chrome app
-   - chrome plugin
-   - java jar
- - Make default list of applications to install configurable via hiera
- - Use application groups for selection
-   - base - general use utilities
-   - xwm - X windows manager + related utils
-   - general - general and office applications
-   - dev - development tooling
-   - virtual - vm and container support
-   - media - multimedia and game support
-   - social - social/communication applications
-   - drivers - hardware specific (e.g. fingerprint, video, etc)
- - organise applications per group
- - move non repo install versions to hiera
-    
-
-### New packages
-
- - dev
-   - myrepos (https://myrepos.branchable.com/)
-   - sdkman (http://sdkman.io/install.html)
-   - robomongo (https://robomongo.org/)
-   - yed GraphEditor (https://www.yworks.com/downloads#yEd)
- - general
-   - DIA
-   - LibreOffice
- - social
-   - rambox (http://rambox.pro/)
- - media
-   - GnomeTwitch (https://github.com/vinszent/gnome-twitch)
- - hardware
-   - nVidia drivers (http://www.nvidia.com/object/unix.html)
-   - xbox controller drivers (http://steamcommunity.com/app/236090/discussions/0/558748653724279774/)
-   - fingerprint (http://askubuntu.com/questions/511876/how-to-install-a-fingerprint-reader-on-lenovo-thinkpad)
-  
-### Remove packages
-
- - i3
- - gradle (move to sdkman managed)
- - maven (move to sdkman managed)
- - scala (move to sdkman managed)
- 
-### Make packages optional
-
- - redshift
- - pidgin
- - gimp
- - inkscape
- - mono (is there a dependency from other packages???)
+- Refactor installation of packages and repositories to collecting and bulk execution.
+- Add installation stages
+- Added support for creation (and change collection) of multiple users.
+- Refactor bash installation to use bash/zsh/whatever.
+- Add installer for java jar applications.
+- Add support for different desktops.
+- Add support for installing (3rd party) drivers and per node/facter-based selection.
+- Add install package for robomongo (https://robomongo.org/)
+- Add install package for yed GraphEditor (https://www.yworks.com/downloads#yEd)
