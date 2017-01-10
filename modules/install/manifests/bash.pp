@@ -1,15 +1,15 @@
-define install::bash(
-  Boolean $is_url = true,
-  Boolean $run_as_root = false,
-  String  $creates = '',
-  String  $unless = '',
-  Array[String] $env = [],
+define install::bash (
+  $is_url      = true,
+  $run_as_root = false,
+  $creates     = '',
+  $unless      = '',
+  $env         = [],
 ) {
   require base
 
   if $run_as_root {
-    $user='root'
-    $home='/root'
+    $user = 'root'
+    $home = '/root'
   } else {
     $user = $base::user
     $home = $base::userhome

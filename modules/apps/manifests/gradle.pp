@@ -1,5 +1,5 @@
 define apps::gradle (
-  String  $version = $name,
+  String  $version = $title,
   Boolean $default = true,
 ) {
   require apps::sdkman

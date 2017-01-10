@@ -1,4 +1,5 @@
 class desktop::clean_unity {
+  # Unable to use ^unity-webapps- due to the dependency of unity-desktop and other core packages on it.
   $appspurge = [
     '^empathy',
     '^transmission',
@@ -11,9 +12,45 @@ class desktop::clean_unity {
     'gnomine',
     'gnome-sudoku',
     'gnome-mahjongg',
-    '^unity-webapps-',
+    'unity-webapps-amazoncloudreader',
+    'unity-webapps-bbcnews',
+    'unity-webapps-cnn-news',
+    'unity-webapps-deezer',
+    'unity-webapps-dev',
+    'unity-webapps-deviantart',
+    'unity-webapps-facebookmessenger',
+    'unity-webapps-gmail',
+    'unity-webapps-googlecalendar',
+    'unity-webapps-googledocs',
+    'unity-webapps-googlenews',
+    'unity-webapps-googleplus',
+    'unity-webapps-googleplusgames',
+    'unity-webapps-grooveshark',
+    'unity-webapps-hulu-player',
+    'unity-webapps-lastfm-radio',
+    'unity-webapps-launchpad',
+    'unity-webapps-librefm',
+    'unity-webapps-linkedin',
+    'unity-webapps-livemail',
+    'unity-webapps-mail-ru',
+    'unity-webapps-newsblur',
+    'unity-webapps-pandora',
+    'unity-webapps-qq-mail',
+    'unity-webapps-reddit',
+    'unity-webapps-tumblr',
+    'unity-webapps-twitter',
+    'unity-webapps-vkcom',
+    'unity-webapps-wordpress',
+    'unity-webapps-wordpress-com',
+    'unity-webapps-yahoomail',
+    'unity-webapps-yahoonews',
+    'unity-webapps-yandex-music',
+    'unity-webapps-yandexmail',
+    'unity-webapps-yandexmusic',
+    'unity-webapps-yandexnews',
+    'unity-webapps-youtube',
   ]
-  ensure_packages( $appspurge, { ensure => purged })
+  ensure_packages($appspurge, { ensure => purged })
 
   #Work-around to make sure the Owncloud icon is shown.
   if $facts['os']['release']['full'] == '16.04' {
@@ -46,7 +83,7 @@ class desktop::clean_unity {
     "gsettings set org.gnome.desktop.privacy remember-recent-files false",
     "gsettings set com.canonical.Unity home-expanded 'Expanded'",
   ]
-  $settings.each| String $setting | {
+  $settings.each | String $setting | {
     exec { $setting:
       command => $setting,
       user    => $base::user,

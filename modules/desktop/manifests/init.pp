@@ -6,6 +6,7 @@ class desktop {
     'gnome-tweak-tool',
     'unity-tweak-tool',
     'network-manager-openvpn-gnome',
+    'indicator-multiload',
     'gksu',
     'terminator',
     'xdotool',
@@ -13,7 +14,7 @@ class desktop {
     'redshift-gtk',
   ]
   ensure_packages(
-    $packages, { ensure => present }
+    $packages, { ensure => latest }
   )
 
   class { 'desktop::clean_unity': }

@@ -1,7 +1,6 @@
-define apps::openjdk(
-  String $version = $name
+define apps::openjdk (
+  $version = $title,
+  $ensure  = 'present'
 ) {
-  package { "openjdk-${version}-jdk":
-    ensure => present
-  }
+  ensure_packages([ "openjdk-${version}-jdk" ], { ensure => $ensure })
 }

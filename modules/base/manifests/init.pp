@@ -14,12 +14,6 @@ class base {
     require => Package['zsh'],
   }
 
-  #  user { $user:
-  #    ensure  => 'present',
-  #    shell   =>  '/bin/zsh',
-  #    require => Package['zsh']
-  #  }
-
   $packages = [
     'ubuntu-restricted-extras',
     'build-essential',

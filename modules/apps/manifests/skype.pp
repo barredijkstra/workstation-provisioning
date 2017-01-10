@@ -9,7 +9,7 @@ class apps::skype {
     { ensure => present }
   )
 
-  install::dpkg { 'skype':
+  install::deb { 'skype':
     file    => "${base::userhome}/Downloads/skype.deb",
     url     => 'http://www.skype.com/go/getskype-linux-beta-ubuntu-64',
     require => Package['libqtcore4:i386']

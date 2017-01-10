@@ -1,17 +1,17 @@
 class apps::firefox {
   require desktop
 
-  package { 'firefox':
-    ensure => present,
-  }
+  ensure_packages([ 'firefox'], { ensure => 'latest' })
 
-  define plugin(
+  define plugin (
     String $url
   ) {
     require wget
+    require apps::firefox
 
     wget::fetch { $url:
-      destination =>  "/usr/lib/firefox/distribution/extensions/${name}"
+      destination => "/usr/lib/firefox/distribution/extensions/${name}",
+      require     => Package['firefox'],
     }
   }
 }
