@@ -1,5 +1,5 @@
 class base {
-  $user     = hiera('user')
+  $user = hiera('user')
   $userhome = "/home/${user}"
   $os_distro = $facts[os][distro][id]
   $os_codename = $facts[os][distro][codename]
@@ -26,7 +26,7 @@ class base {
     'apt-transport-https',
     'python-apt',
     'openssl',
-    'ppa-purge' ,
+    'ppa-purge',
     'owncloud-client',
     'htop',
     'screen',
@@ -42,6 +42,7 @@ class base {
     'libmono-system-management4.0-cil',
     'vim',
     'zsh',
+    'rng-tools',
   ]
   /*
   ensure_packages($packages, {
@@ -50,8 +51,17 @@ class base {
   })
   */
   package { $packages:
-    ensure        => present,
+    ensure        => latest,
     allow_virtual => true,
+  }
+
+  if $is_virtual {
+    $haveged_ensure = absent
+  }else {
+    $haveged_ensure = latest
+  }
+  package { 'haveged':
+    ensure        => $haveged_ensure,
   }
 
   realize(User[$user])

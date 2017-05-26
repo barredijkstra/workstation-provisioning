@@ -8,7 +8,7 @@ class apps::intellij (
   $idea_path = "${base::userhome}/Apps/intellij-idea"
 
   file { $install_path:
-    ensure        => 'directory'
+    ensure => 'directory'
   }
   install::tgz { 'intellij.tar.gz':
     download_url     => "https://download.jetbrains.com/idea/ideaIU-${version}.tar.gz",
@@ -29,7 +29,8 @@ class apps::intellij (
     comment      => 'IntelliJ IDEA',
     exec_path    => "${idea_path}/bin/idea.sh",
     icon         => "${idea_path}/bin/idea.png",
-    categories   => [ 'Development','IDE' ],
+    categories   => [ 'Development', 'IDE' ],
     user         => $base::user,
+    on_desktop   => true,
   }
 }
