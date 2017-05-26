@@ -30,10 +30,14 @@ class apps(
   class { 'apps::skype': }
   class { 'apps::spotify': }
   class { 'apps::steam': }
+  class { 'apps::owncloud': }
 
   class { 'apps::git': }
   class { 'apps::docker': dockercompose_version => $dockercompose_version, }
   class { 'apps::vagrant': }
+  class { 'apps::kubectl': }
+  class { 'apps::minikube': }
+
   apps::openjdk { $java_version: }
   class { 'apps::sdkman': }
   apps::scala { $scala_version: sbt_version => $sbt_version }
@@ -41,4 +45,5 @@ class apps(
   apps::maven { $maven_version: }
   class { 'apps::nodejs': }
   class { 'apps::intellij': version => $intellij_version }
+  class { 'apps::asciidoctor': }
 }
