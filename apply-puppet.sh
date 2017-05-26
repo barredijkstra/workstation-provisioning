@@ -3,7 +3,6 @@
 declare -A MODULES=(
     ['attachmentgenie-locales']='latest'
     ['bashtoni-timezone']='latest'
-    ['garethr-docker']='latest'
     ['maestrodev-wget']='latest'
     ['paulosuzart-sdkman']='latest'
     ['puppet-archive']='latest'

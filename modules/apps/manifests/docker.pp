@@ -4,36 +4,18 @@ class apps::docker (
 ) {
   require base
 
-  ensure_packages([ "docker", "docker-engine-cs", "docker.io", "lxc-docker" ], { ensure => absent })
-
   install::repo { 'docker':
-    repo_location => 'https://download.docker.com/linux/ubuntu',
-    repo_release  => 'stable',
-    repo_target   => "${lsbdistcodename}",
+    repo_location => 'https://apt.dockerproject.org/repo',
+    repo_release  => 'ubuntu-xenial',
+    repo_target   => "main",
     repo_key      => {
-      id     => '9DC858229FC7DD38854AE2D88D81803C0EBFCD88',
-      source => 'https://download.docker.com/linux/ubuntu/gpg',
+      id     => '58118E89F3A912897C070ADBF76221572C52609D',
+      server => 'hkp://p80.pool.sks-keyservers.net:80',
     },
   }
 
-  ensure_packages([ "software-properties-common", "linux-image-extra-generic", "linux-image-extra-virtual",  "docker-engine" ], {
+  ensure_packages([ "software-properties-common", "linux-image-extra-virtual",  "docker-engine", "docker-compose" ], {
     ensure  => 'latest',
     require => Install::Repo['docker']
   })
-
-  /*
-  class { '::docker':
-    ensure => present,
-  }
-  class { '::docker::compose':
-    ensure => present,
-  }
-
-  if $allow_user_access {
-    User <| title == $base::user |> {
-      groups +> 'docker',
-      require => Class['docker']
-    }
-  }
-  */
 }
