@@ -3,7 +3,6 @@ class desktop {
 
   $packages = [
     'ubuntu-desktop',
-    'gnome-tweak-tool',
     'unity-tweak-tool',
     'network-manager-openvpn-gnome',
     'indicator-multiload',
